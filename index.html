@@ -9,6 +9,8 @@
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/web3@latest/dist/web3.min.js"></script>
         <script src="https://unpkg.com/moralis/dist/moralis.js"></script>
+		<link rel="icon" href="images/icon.png">
+
 
 		<style>
 			#clockdiv {
@@ -498,7 +500,7 @@
 								let mintAmount = await contract_instance.methods.randomMint(AMOUNT_TO_MINT).send({from:ethereum.selectedAddress})
 								
 								console.log(mintAmount)
-								alert("Your NFT(s) have been generated, visit opensea to see your Kid(s)!")
+								alert("Your NFT(s) have been generated, visit " + <a href="https://opensea.io/collection/frontyard-baseball">OpenSea</a> + " to see your Kid(s)!")
 
 								// console.log("minted, tokenID: ", receipt);
 								// console.log('events:: ', JSON.stringify(receipt.events));

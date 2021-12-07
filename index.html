@@ -359,8 +359,21 @@
 								}
 								console.log("logged in user:", user);
 								$("#btn-getApproval").removeAttr("disabled");
+								getWETHBal();
+							}
 
+							async function getWETHBal(){
+
+								let user = Moralis.User.current();
+								if (!user) {
+									user = await Moralis.authenticate();
+								}
+								const options = { chain: "MATIC", address: "0x7ceb23fd6bc0add59e62ac25578270cff1b9f619"};
+								const balances = await Moralis.Web3.getAllERC20();
+								// const balances2 = await Moralis.Web3API.getAllERC20(options)
 								
+								console.log("WETH balance is", balances);
+								console.log(user.attributes.accounts)
 							}
 
 							// LOG OUT
@@ -389,15 +402,15 @@
 								// $("#btn-mint").removeAttr("disabled");
 
 								//update newest contract done
-								let x = await contract_instance.methods.approve("0x9C60377015C1D13ed388E4474c05a1F2f379d6ac", "999999999999999999").send({from:ethereum.selectedAddress});
-								let y = await contract_instance.methods.allowance(_owner, _spender).call();
+								let x = await contract_instance.methods.approve(_spender, "999999999999999999").send({from:ethereum.selectedAddress});
+								// let y = await contract_instance.methods.(_owner, _spender).send({from:ethereum.selectedAddress});
 								console.log(x);
-								console.log(y);
+								// console.log(y);
 					
 								$("#btn-mint").removeAttr("disabled");
-								if (y == '99999999999999999'){
-									$("btn-getApproval").style.visibility = 'hidden';
-								}
+								// if (y == '99999999999999999'){
+								// 	$("btn-getApproval").style.visibility = 'hidden';
+								// }
 
 							}
 							// function pullVal(){
@@ -426,7 +439,7 @@
 
 							}
 
-
+							// getWETHBal();
 							// document.getElementById("btn-mint").onclick = popUP();
 							// function popUP(){
 							// 	var newWindowContent = document.getElementById('test').innerHTML;

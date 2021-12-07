@@ -206,7 +206,7 @@
 		<!-- Wrapper -->
 			<div id="wrapper">
 
-				<h1>Countdown to Mint</h1>
+				<h1 id = toptext>Countdown to Mint</h1>
 				<div id="clockdiv">
 					<div>
 					<span class="days"></span>
@@ -305,6 +305,8 @@
 									if (t.total <= 0) {
 										$("#btn-login").removeAttr("disabled");
 										clearInterval(timeinterval);
+										document.getElementById('clockdiv').remove()
+										$('#toptext').text("MINT IS NOW LIVE...LET'S PLAY BALL!")
 									
 									}
 								}

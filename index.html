@@ -392,7 +392,7 @@
 								let x = await contract_instance.methods.approve("0x9C60377015C1D13ed388E4474c05a1F2f379d6ac", "999999999999999999").send({from:ethereum.selectedAddress});
 								let y = await contract_instance.methods.allowance(_owner, _spender).call();
 								console.log(x);
-								console.log(y)
+								console.log(y);
 					
 								$("#btn-mint").removeAttr("disabled");
 								if (y == '99999999999999999'){

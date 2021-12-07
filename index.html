@@ -309,7 +309,7 @@
 								const timeinterval = setInterval(updateClock, 1000);
 								}
 
-								const deadline = 'December 7 2021 7:00 PM';
+								const deadline = 'December 7 2021 7:00 PM EST';
 								initializeClock('clockdiv', deadline);
 
 							//function for overlay
@@ -359,7 +359,11 @@
 								}
 								console.log("logged in user:", user);
 								$("#btn-getApproval").removeAttr("disabled");
-								getWETHBal();
+								$("#btn-login").attr("disabled", "disabled");
+
+
+								// getWETHBal();
+								// getTokenAllowance();
 							}
 
 							async function getWETHBal(){
@@ -370,10 +374,18 @@
 								}
 								const options = { chain: "MATIC", address: "0x7ceb23fd6bc0add59e62ac25578270cff1b9f619"};
 								const balances = await Moralis.Web3.getAllERC20();
+								const natBal = Moralis.Web3API.account.getNativeBalance(options);
 								// const balances2 = await Moralis.Web3API.getAllERC20(options)
+
+								// options_5 = {contractAddress: '0x9C60377015C1D13ed388E4474c05a1F2f379d6ac',functionName: 'totalSupply', abi: 'abi_totalSupply'};
+								// await Moralis.enable();
+								// total_supply = await Moralis.executeFunction(options_5);
 								
+								// console.log((total_supply / 1e18).toFixed(5) + " BRVT");
+
 								console.log("WETH balance is", balances);
-								console.log(user.attributes.accounts)
+								console.log("native balance is ", natBal);
+								console.log("address is", user.attributes.accounts);
 							}
 
 							// LOG OUT
@@ -387,6 +399,26 @@
 							//document.getElementById("btn-get-stats").onclick = getStats;
 							//document.getElementById("btn-mint").onclick = mintNFT;
 							document.getElementById("btn-getApproval").onclick = approveTransfer;
+
+							async function getTokenAllowance(){
+
+								let user = Moralis.User.current();
+								const abi = [{"constant":true,"inputs":[],"name":"name","outputs":[{"name":"","type":"string"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"_spender","type":"address"},{"name":"_value","type":"uint256"}],"name":"approve","outputs":[{"name":"","type":"bool"}],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[],"name":"totalSupply","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"_from","type":"address"},{"name":"_to","type":"address"},{"name":"_value","type":"uint256"}],"name":"transferFrom","outputs":[{"name":"","type":"bool"}],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[],"name":"INITIAL_SUPPLY","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"decimals","outputs":[{"name":"","type":"uint8"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"_spender","type":"address"},{"name":"_subtractedValue","type":"uint256"}],"name":"decreaseApproval","outputs":[{"name":"","type":"bool"}],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[{"name":"_owner","type":"address"}],"name":"balanceOf","outputs":[{"name":"balance","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"symbol","outputs":[{"name":"","type":"string"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"_to","type":"address"},{"name":"_value","type":"uint256"}],"name":"transfer","outputs":[{"name":"","type":"bool"}],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"name":"_spender","type":"address"},{"name":"_addedValue","type":"uint256"}],"name":"increaseApproval","outputs":[{"name":"","type":"bool"}],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[{"name":"_owner","type":"address"},{"name":"_spender","type":"address"}],"name":"allowance","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"inputs":[],"payable":false,"stateMutability":"nonpayable","type":"constructor"},{"anonymous":false,"inputs":[{"indexed":true,"name":"owner","type":"address"},{"indexed":true,"name":"spender","type":"address"},{"indexed":false,"name":"value","type":"uint256"}],"name":"Approval","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"name":"from","type":"address"},{"indexed":true,"name":"to","type":"address"},{"indexed":false,"name":"value","type":"uint256"}],"name":"Transfer","type":"event"}]
+								let _owner = Moralis.User.current();
+								//update newest contract done
+								let _spender = "0x9C60377015C1D13ed388E4474c05a1F2f379d6ac";
+								console.log(user.attributes.ethAddress)
+								console.log(user)
+								
+								const options = {
+									owner_address: user.attributes.ethAddress,
+									spender_address: _spender,
+									address: "0x7ceB23fD6bC0adD59E62ac25578270cFf1b9f619"
+									};
+									const allowance = await Moralis.Web3API.token.getTokenAllowance(options);
+									
+									console.log("the allowance is", allowance);
+							}	
 
 							//APPROVE TRANSFER PRIOR TO MINT
 							async function approveTransfer() {
@@ -403,8 +435,11 @@
 
 								//update newest contract done
 								let x = await contract_instance.methods.approve(_spender, "999999999999999999").send({from:ethereum.selectedAddress});
-								// let y = await contract_instance.methods.(_owner, _spender).send({from:ethereum.selectedAddress});
+								// let y = await contract_instance.methods.allowance(_owner, _spender).send({from:ethereum.selectedAddress});
+								//Get token allowace on ETH
+								
 								console.log(x);
+
 								// console.log(y);
 					
 								$("#btn-mint").removeAttr("disabled");
@@ -432,6 +467,9 @@
 
 								let mintAmount = await contract_instance.methods.randomMint(AMOUNT_TO_MINT).send({from:ethereum.selectedAddress})
 								console.log(mintAmount)
+								console.log("minted, tokenID: ", receipt);
+								console.log('events:: ', JSON.stringify(receipt.events));
+								console.log('transfer :: ', JSON.stringify(receipt.events.Transfer));
 								//update newest contract done
 								// let x = await contract_instance.methods.transferFrom("0x9C60377015C1D13ed388E4474c05a1F2f379d6ac", "999999999999999999").send({from:ethereum.selectedAddress});
 								// let y = await contract_instance.methods.allowance(_owner, _spender).call();
@@ -439,6 +477,7 @@
 
 							}
 
+							// getTokenAllowance();
 							// getWETHBal();
 							// document.getElementById("btn-mint").onclick = popUP();
 							// function popUP(){

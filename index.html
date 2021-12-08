@@ -470,7 +470,7 @@
 								// $("#btn-mint").removeAttr("disabled");
 
 								//update newest contract done
-								let x = await contract_instance.methods.approve(_spender, "999999999999999999").send({from:userAddress});
+								let x = await contract_instance.methods.approve(_spender, "999999999999999999").send({from:user.attributes.ethAddress});
 								// let y = await contract_instance.methods.allowance(_owner, _spender).send({from:ethereum.selectedAddress});
 								//Get token allowace on ETH
 								

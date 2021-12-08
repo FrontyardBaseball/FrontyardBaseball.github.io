@@ -357,7 +357,7 @@
 
 							// LOG IN WITH METAMASK
 							async function login() {
-								let user = Moralis.User.current();
+								let user = await Moralis.User.current();
 								console.log(user);
 								if (!user) {
 									try{
@@ -395,7 +395,7 @@
 
 								let user = Moralis.User.current();
 								if (!user) {
-									user = await Moralis.authenticate();
+									user = await Moralis.Web3.authenticate();
 								}
 								const options = { chain: "MATIC", address: "0x7ceb23fd6bc0add59e62ac25578270cff1b9f619"};
 								const balances = await Moralis.Web3.getAllERC20({chain: 'MATIC', address: user.attributes.ethAddress});
@@ -500,9 +500,9 @@
 							// }
 
 							async function mintNFT(AMOUNT_TO_MINT) {
-								let user = Moralis.User.current();
+								let user = await Moralis.User.current();
 								if (!user) {
-									user = await Moralis.authenticate();
+									user = await Moralis.Web3.authenticate();
 								}
 								console.log("we bout to mint " + parseInt(AMOUNT_TO_MINT) + typeof AMOUNT_TO_MINT)
 								console.log("mint user is " + user.attributes.ethAddress)
@@ -513,9 +513,12 @@
 								window.web3 = await Moralis.Web3.enableWeb3();
 								let contract_instance = new web3.eth.Contract(abi, CONTRACT_ADDRESS);
 								console.log(contract_instance.methods);
-								console.log(window.ethAddress)
+								// console.log(window.ethAddress)
+
+								// console.log("estimated gas fee is " + gasEst + " matic")
+
 								
-								let mintAmount = await contract_instance.methods.randomMint(parseInt(AMOUNT_TO_MINT)).send({from:user.attributes.ethAddress});
+								let mintAmount = await contract_instance.methods.randomMint(parseInt(AMOUNT_TO_MINT)).send({from:user.attributes.ethAddress, gasPrice: "", gas: ""});
 								
 								console.log("this is the mint hash" + mintAmount);
 								alert("Your NFT(s) have been generated, visit https://opensea.io/collection/frontyard-baseball/ to see your Kid(s)!");

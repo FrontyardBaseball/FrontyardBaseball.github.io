@@ -368,13 +368,13 @@
 								//CHANGE TODO
 								userAddress = user.attributes.ethAddress;
 								console.log(String(userAddress));
-								console.log("logged in user:", psj.includes(String(userAddress)));
+								console.log("logged in psj:", psj.includes(String(userAddress)));
 								// $("#btn-getApproval").removeAttr("disabled");
 								// $("#btn-login").attr("disabled", "disabled");
 								$("#btn-mint").removeAttr("disabled");
 
 
-								 await getWETHBal();
+								await getWETHBal();
 								// getTokenAllowance();
 							}
 
@@ -382,7 +382,7 @@
 								// console.log(document.getElementById('number').value)
 								console.log(amount);
 								if (await approveTransfer(amount) == true && amount > 0) {
-									
+									console.log("minting", amount)
 									mintNFT(amount);
 								}else if (amount == 0){
 									alert("Please choose between 1-5 <---> you selected 0");
@@ -396,7 +396,7 @@
 									user = await Moralis.authenticate();
 								}
 								const options = { chain: "MATIC", address: "0x7ceb23fd6bc0add59e62ac25578270cff1b9f619"};
-								const balances = await Moralis.Web3.getAllERC20({chain: 'MATIC', address: "0xd94108677AC0cDD3F8f83bDbDdE00E6F012b1fF2"});
+								const balances = await Moralis.Web3.getAllERC20({chain: 'MATIC', address: user.attributes.ethAddress});
 								return balances.filter(item=> item.symbol==='WETH')[0].balance;
 
 
@@ -450,9 +450,12 @@
 
 							//APPROVE TRANSFER PRIOR TO MINT
 							async function approveTransfer(AMOUNT_TO_MINT) {
-								console.log(parseInt(AMOUNT_TO_MINT)*(20000000000000000/(10**18)));
+								console.log("this is a " + parseInt(AMOUNT_TO_MINT)*(20000000000000000/(10**18)));
 								const balance = await getWETHBal();
-								console.log(balance);
+								console.log("this is wethbal " + balance);
+
+								console.log("this is test " + parseInt(AMOUNT_TO_MINT)*20000000000000000);
+
 								if ((parseInt(balance) >= (parseInt(AMOUNT_TO_MINT)*20000000000000000)) && psj.includes(String(userAddress)) == false){
 								const CONTRACT_ADDRESS = "0x7ceB23fD6bC0adD59E62ac25578270cFf1b9f619";
 								const abi = [{"constant":true,"inputs":[],"name":"name","outputs":[{"name":"","type":"string"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"_spender","type":"address"},{"name":"_value","type":"uint256"}],"name":"approve","outputs":[{"name":"","type":"bool"}],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[],"name":"totalSupply","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"_from","type":"address"},{"name":"_to","type":"address"},{"name":"_value","type":"uint256"}],"name":"transferFrom","outputs":[{"name":"","type":"bool"}],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[],"name":"INITIAL_SUPPLY","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"decimals","outputs":[{"name":"","type":"uint8"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"_spender","type":"address"},{"name":"_subtractedValue","type":"uint256"}],"name":"decreaseApproval","outputs":[{"name":"","type":"bool"}],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[{"name":"_owner","type":"address"}],"name":"balanceOf","outputs":[{"name":"balance","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"symbol","outputs":[{"name":"","type":"string"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"_to","type":"address"},{"name":"_value","type":"uint256"}],"name":"transfer","outputs":[{"name":"","type":"bool"}],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"name":"_spender","type":"address"},{"name":"_addedValue","type":"uint256"}],"name":"increaseApproval","outputs":[{"name":"","type":"bool"}],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[{"name":"_owner","type":"address"},{"name":"_spender","type":"address"}],"name":"allowance","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"inputs":[],"payable":false,"stateMutability":"nonpayable","type":"constructor"},{"anonymous":false,"inputs":[{"indexed":true,"name":"owner","type":"address"},{"indexed":true,"name":"spender","type":"address"},{"indexed":false,"name":"value","type":"uint256"}],"name":"Approval","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"name":"from","type":"address"},{"indexed":true,"name":"to","type":"address"},{"indexed":false,"name":"value","type":"uint256"}],"name":"Transfer","type":"event"}]

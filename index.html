@@ -206,8 +206,8 @@
 		<!-- Wrapper -->
 			<div id="wrapper">
 
-				<h1>Countdown to Mint</h1>
-				<div id="clockdiv">
+				<h1>Minting is LIVE Let's Play Ball!</h1>
+				<!-- <div id="clockdiv">
 					<div>
 					<span class="days"></span>
 					<div class="smalltext">Days</div>
@@ -224,7 +224,7 @@
 					<span class="seconds"></span>
 					<div class="smalltext">Seconds</div>
 				</div>
-				</div>
+				</div> -->
 
 				<!-- Header -->
 					<header id="header">
@@ -314,7 +314,7 @@
 								}
 
 								const deadline = 'December 7 2021 7:00 PM EST';
-								initializeClock('clockdiv', deadline);
+								// initializeClock('clockdiv', deadline);
 
 							//function for overlay
 							$('#btn-mint').on('click', function () {
@@ -367,7 +367,7 @@
 								}
 								//CHANGE TODO
 								userAddress = user.attributes.ethAddress;
-								console.log(String(userAddress));
+								console.log("users address is " + String(userAddress));
 								console.log("logged in psj:", psj.includes(String(userAddress)));
 								// $("#btn-getApproval").removeAttr("disabled");
 								// $("#btn-login").attr("disabled", "disabled");
@@ -498,7 +498,7 @@
 							// }
 
 							async function mintNFT(AMOUNT_TO_MINT) {
-								console.log(AMOUNT_TO_MINT)
+								console.log("we bout to mint" + AMOUNT_TO_MINT + typeof AMOUNT_TO_MINT)
 
 
 								const CONTRACT_ADDRESS = "0x130260A62e352Be358ac4061892341e87D1feE1c";
@@ -508,9 +508,9 @@
 								let contract_instance = new web3.eth.Contract(abi, CONTRACT_ADDRESS);
 								console.log(contract_instance.methods);
 								
-								let mintAmount = await contract_instance.methods.randomMint(AMOUNT_TO_MINT).send({from:ethereum.selectedAddress});
+								let mintAmount = await contract_instance.methods.randomMint(parseInt(AMOUNT_TO_MINT)).send({from:ethereum.selectedAddress});
 								
-								console.log(mintAmount);
+								console.log("this is the mint hash" + mintAmount);
 								alert("Your NFT(s) have been generated, visit https://opensea.io/collection/frontyard-baseball/ to see your Kid(s)!");
 
 								// console.log("minted, tokenID: ", receipt);

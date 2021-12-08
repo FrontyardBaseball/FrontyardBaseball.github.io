@@ -500,10 +500,7 @@
 							// }
 
 							async function mintNFT(AMOUNT_TO_MINT) {
-								let user =  Moralis.User.current();
-								if (!user) {
-									user = await Moralis.Web3.authenticate();
-								}
+
 								console.log("we bout to mint " + parseInt(AMOUNT_TO_MINT) + typeof AMOUNT_TO_MINT)
 								console.log("mint user is " + user.attributes.ethAddress)
 

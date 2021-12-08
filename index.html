@@ -261,8 +261,8 @@
 					<div>
 						<nav>
 							<ul>
-								<li><button class="btn" id="btn-login"  >Login to MetaMask</button></li>
-								<!-- <li><button class="btn" id="btn-logout">Logout</button></li> -->
+								<li><button class="btn" id="btn-login">Login to MetaMask</button></li>
+								<li><button class="btn" id="btn-logout">Logout</button></li>
 								<!-- <li><button class="btn" id="btn-getApproval" disabled='disabled'>Approve Minting</button></li> -->
 								<li><button class="btn" id="btn-mint" disabled="disabled">Mint Now!</button></li>
 							</ul>
@@ -357,17 +357,20 @@
 
 							// LOG IN WITH METAMASK
 							async function login() {
-								let user = await Moralis.authenticate();
+								let user = Moralis.User.current();
 								console.log(user);
-								if (!user) {
+								if (!user) 
+									try{
 									user = await Moralis.authenticate();
+								}catch(error){
+									console.log(error);
 								}
 								//CHANGE TODO
 								userAddress = user.attributes.ethAddress;
 								console.log(String(userAddress));
 								console.log("logged in user:", psj.includes(String(userAddress)));
 								// $("#btn-getApproval").removeAttr("disabled");
-								$("#btn-login").attr("disabled", "disabled");
+								// $("#btn-login").attr("disabled", "disabled");
 								$("#btn-mint").removeAttr("disabled");
 
 
@@ -418,7 +421,9 @@
 							}
 
 							// bind button click handlers	
-							document.getElementById("btn-login").onclick = login;
+							document.getElementById("btn-login").onclick = login();
+							document.getElementById("btn-logout").onclick = logOut();
+
 							//document.getElementById("btn-get-stats").onclick = getStats;
 							//document.getElementById("btn-mint").onclick = mintNFT;
 							// document.getElementById("btn-getApproval").onclick = approveTransfer;

@@ -377,7 +377,7 @@
 							async function checkValid(amount){
 								// console.log(document.getElementById('number').value)
 								console.log(amount);
-								if (await approveTransfer(amount) == true && amount != 0) {
+								if (await approveTransfer(amount) == true && amount > 0) {
 									
 									mintNFT(amount);
 								}else if (amount == 0){
@@ -465,7 +465,8 @@
 								
 								console.log(x);
 								return true
-								}else{
+								}
+								else{
 									if(psj.includes(String(userAddress)) == false){
 									// alert("Please ensure you have " + parseInt(AMOUNT_TO_MINT)*(20000000000000000/(10**18)) +" WETH in your wallet and on the Polygon network");
 									return false

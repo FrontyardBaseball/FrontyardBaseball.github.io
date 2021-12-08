@@ -357,7 +357,7 @@
 
 							// LOG IN WITH METAMASK
 							async function login() {
-								let user = await Moralis.User.current();
+								let user = Moralis.User.current();
 								console.log(user);
 								if (!user) {
 									try{
@@ -500,7 +500,7 @@
 							// }
 
 							async function mintNFT(AMOUNT_TO_MINT) {
-								let user = await Moralis.User.current();
+								let user =  Moralis.User.current();
 								if (!user) {
 									user = await Moralis.Web3.authenticate();
 								}

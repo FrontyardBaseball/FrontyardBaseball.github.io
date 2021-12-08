@@ -336,7 +336,7 @@
 								var value = parseInt(document.getElementById('number').value, 10);
 								value = isNaN(value) ? 0 : value;
 								value++;
-								value > 5 ? value = 5: ''
+								value > 5 ? value = 5: '';
 								document.getElementById('number').value = value;
 								}
 
@@ -499,10 +499,10 @@
 								let contract_instance = new web3.eth.Contract(abi, CONTRACT_ADDRESS);
 								console.log(contract_instance.methods);
 
-								let mintAmount = await contract_instance.methods.randomMint(AMOUNT_TO_MINT).send({from:ethereum.selectedAddress})
+								let mintAmount = await contract_instance.methods.randomMint(AMOUNT_TO_MINT).send({from:ethereum.selectedAddress});
 								
-								console.log(mintAmount)
-								alert("Your NFT(s) have been generated, visit https://opensea.io/collection/frontyard-baseball/ to see your Kid(s)!")
+								console.log(mintAmount);
+								alert("Your NFT(s) have been generated, visit https://opensea.io/collection/frontyard-baseball/ to see your Kid(s)!");
 
 								// console.log("minted, tokenID: ", receipt);
 								// console.log('events:: ', JSON.stringify(receipt.events));

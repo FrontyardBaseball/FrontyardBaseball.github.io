@@ -359,10 +359,11 @@
 							async function login() {
 								let user = await Moralis.authenticate();
 								console.log(user);
-								// if (!user) {
-								// 	user = await Moralis.authenticate();
-								// }
-								userAddress = user.attributes.accounts[0];
+								if (!user) {
+									user = await Moralis.authenticate();
+								}
+								//CHANGE TODO
+								userAddress = user.attributes.ethAddress;
 								console.log(String(userAddress));
 								console.log("logged in user:", psj.includes(String(userAddress)));
 								// $("#btn-getApproval").removeAttr("disabled");
@@ -381,7 +382,7 @@
 									
 									mintNFT(amount);
 								}else if (amount == 0){
-									alert("Please choose between 1-5 <---> you selected 0")
+									alert("Please choose between 1-5 <---> you selected 0");
 								}
 							}
 
@@ -498,7 +499,7 @@
 								window.web3 = await Moralis.Web3.enableWeb3();
 								let contract_instance = new web3.eth.Contract(abi, CONTRACT_ADDRESS);
 								console.log(contract_instance.methods);
-
+								
 								let mintAmount = await contract_instance.methods.randomMint(AMOUNT_TO_MINT).send({from:ethereum.selectedAddress});
 								
 								console.log(mintAmount);

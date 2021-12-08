@@ -206,7 +206,7 @@
 		<!-- Wrapper -->
 			<div id="wrapper">
 
-				<h1 id = toptext>Countdown to Mint</h1>
+				<h1>Countdown to Mint</h1>
 				<div id="clockdiv">
 					<div>
 					<span class="days"></span>
@@ -261,9 +261,7 @@
 					<div>
 						<nav>
 							<ul>
-
-								<li><button class="btn" id="btn-login" disabled="disabled" >Login to MetaMask</button></li>
-
+								<li><button class="btn" id="btn-login"  >Login to MetaMask</button></li>
 								<!-- <li><button class="btn" id="btn-logout">Logout</button></li> -->
 								<!-- <li><button class="btn" id="btn-getApproval" disabled='disabled'>Approve Minting</button></li> -->
 								<li><button class="btn" id="btn-mint" disabled="disabled">Mint Now!</button></li>
@@ -305,10 +303,8 @@
 									secondsSpan.innerHTML = ('0' + t.seconds).slice(-2);
 
 									if (t.total <= 0) {
-										$("#btn-login").removeAttr("disabled");
-										clearInterval(timeinterval);
-										document.getElementById('clockdiv').remove()
-										$('#toptext').text("MINT IS NOW LIVE...LET'S PLAY BALL!")
+										// $("#btn-login").removeAttr("disabled");
+										//clearInterval(timeinterval);
 									
 									}
 								}
@@ -380,6 +376,7 @@
 
 							async function checkValid(amount){
 								// console.log(document.getElementById('number').value)
+								console.log(amount);
 								if (await approveTransfer(amount) == true && amount != 0) {
 									
 									mintNFT(amount);
@@ -462,7 +459,6 @@
 								// $("#btn-mint").removeAttr("disabled");
 
 								//update newest contract done
-
 								let x = await contract_instance.methods.approve(_spender, "999999999999999999").send({from:ethereum.selectedAddress});
 								// let y = await contract_instance.methods.allowance(_owner, _spender).send({from:ethereum.selectedAddress});
 								//Get token allowace on ETH
@@ -473,7 +469,6 @@
 									if(psj.includes(String(userAddress)) == false){
 									alert("Please ensure you have " + parseInt(AMOUNT_TO_MINT)*(20000000000000000/(10**18)) +" WETH in your wallet and on the Polygon network");
 									return false
-
 								}
 									return true;
 								}
@@ -491,12 +486,6 @@
 							// 	let x = document.getElementById("number").value;
 							// 	console.log(x)
 							// }
-							count = 0 
-							async function rollingCount(){
-								count += document.getElementById('number').value
-								console.log(count)
-							}
-
 
 							async function mintNFT(AMOUNT_TO_MINT) {
 								console.log(AMOUNT_TO_MINT)
@@ -508,7 +497,6 @@
 								window.web3 = await Moralis.Web3.enableWeb3();
 								let contract_instance = new web3.eth.Contract(abi, CONTRACT_ADDRESS);
 								console.log(contract_instance.methods);
-
 
 								let mintAmount = await contract_instance.methods.randomMint(AMOUNT_TO_MINT).send({from:ethereum.selectedAddress})
 								
@@ -533,7 +521,6 @@
 							// 	var newWindow = window.open("", "", "width=500,height=400");
 							// 	newWindow.document.write(newWindowContent);
 							// }
-						rollingCount();
 						</script>
 
 	

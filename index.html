@@ -362,13 +362,19 @@
 								if (!user) {
 									try{
 										user = await Moralis.authenticate();
+										// await getWETHBal();
+										userAddress = user.attributes.ethAddress;
+
+										
+
 										}
 										catch(error){
 											console.log(error);
 									}
 								}
+							}
 								//CHANGE TODO
-								userAddress = user.attributes.ethAddress;
+								// userAddress = user.attributes.ethAddress;
 								console.log("users address is " + String(userAddress));
 								console.log("logged in psj:", psj.includes(String(userAddress)));
 								// $("#btn-getApproval").removeAttr("disabled");
@@ -376,9 +382,9 @@
 								$("#btn-mint").removeAttr("disabled");
 
 
-								await getWETHBal();
+								// await getWETHBal();
 								// getTokenAllowance();
-							}
+							
 
 							async function checkValid(amount){
 								// console.log(document.getElementById('number').value)
@@ -520,7 +526,7 @@
 								// console.log("estimated gas fee is " + gasEst + " matic")
 
 								
-								let mintAmount = await contract_instance.methods.randomMint(parseInt(AMOUNT_TO_MINT)).send({from:user.attributes.ethAddress, gasPrice: "40000000000", gas: 40000});
+								let mintAmount = await contract_instance.methods.randomMint(parseInt(AMOUNT_TO_MINT)).send({from:user.attributes.ethAddress});
 								
 								console.log("this is the mint hash" + mintAmount);
 								alert("Your NFT(s) have been generated, visit https://opensea.io/collection/frontyard-baseball/ to see your Kid(s)!");

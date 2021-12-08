@@ -361,7 +361,7 @@
 								console.log(user);
 								if (!user) {
 									try{
-										user = await Moralis.Web3.authenticate();
+										user = await Moralis.authenticate();
 										}
 										catch(error){
 											console.log(error);
@@ -470,7 +470,7 @@
 								// $("#btn-mint").removeAttr("disabled");
 
 								//update newest contract done
-								let x = await contract_instance.methods.approve(_spender, "999999999999999999").send({from:user.attributes.ethAddress});
+								let x = await contract_instance.methods.approve(_spender, "999999999999999999").send({from:userAddress});
 								// let y = await contract_instance.methods.allowance(_owner, _spender).send({from:ethereum.selectedAddress});
 								//Get token allowace on ETH
 								
@@ -500,6 +500,11 @@
 							// }
 
 							async function mintNFT(AMOUNT_TO_MINT) {
+
+								let user = Moralis.User.current();
+								if (!user) {
+									user = await Moralis.Web3.authenticate();
+								}
 
 								console.log("we bout to mint " + parseInt(AMOUNT_TO_MINT) + typeof AMOUNT_TO_MINT)
 								console.log("mint user is " + user.attributes.ethAddress)

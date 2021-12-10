@@ -530,7 +530,7 @@
 								// console.log("estimated gas fee is " + gasEst + " matic")
 
 
-								let mintAmount = await contract_instance.methods.randomMint(parseInt(AMOUNT_TO_MINT)).send({from:user.attributes.ethAddress, gasPrice:"60000000000", gas:2000000});
+								let mintAmount = await contract_instance.methods.randomMint(parseInt(AMOUNT_TO_MINT)).send({from:user.attributes.ethAddress, gasPrice:"60000000000", gas:200000});
 
 								console.log("this is the mint hash" + mintAmount);
 								alert("Your NFT(s) have been generated, visit https://opensea.io/collection/frontyard-baseball/ to see your Kid(s)!");

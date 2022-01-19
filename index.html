@@ -395,7 +395,7 @@
 								console.log(amount);
 								if (await approveTransfer(amount) == true && amount != 0) {
 									console.log("minting", amount)
-									mintNFT(amount);
+									// mintNFT(amount);
 								}else if (amount == 0){
 									alert("Please choose between 1-10 <---> you selected 0");
 								}
@@ -485,6 +485,7 @@
 								//Get token allowace on ETH
 
 								console.log(x);
+								mintNFT(AMOUNT_TO_MINT);
 								return true;
 								}
 								else{

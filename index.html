@@ -489,8 +489,20 @@
 								if (userAddress==""){
 									userAddress = _owner.attributes.ethAddress;
 								}
-								//console.log(_owner);
+								console.log("here we go");
+								const options = {
+									chain: "MATIC",
+  									owner_address: userAddress,
+  									spender_address: _spender,
+  									address: String(CONTRACT_ADDRESS)
+								};
+								const allowance = await Moralis.Web3API.token.getTokenAllowance(options);
+
+
+								console.log(Object.values(allowance)[0]);
+								if (Object.values(allowance)[0] != "999999999999999999"){
 								let x = await contract_instance.methods.approve(_spender, "999999999999999999").send({from:userAddress});
+								}
 								// let y = await contract_instance.methods.allowance(_owner, _spender).send({from:ethereum.selectedAddress});
 								//Get token allowace on ETH
 

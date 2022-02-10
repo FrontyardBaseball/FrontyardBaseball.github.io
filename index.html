@@ -249,7 +249,7 @@
 								<button class='close' id="close" style="background-color: black; position: absolute; top: 0; right: 0;">Cancel</button>
 
 								<p>How many Frontyard Baseball NFTs would you like to mint?</p>
-								<p>(up to 10)</p>
+								<p>(up to 5 at a time)</p>
 
 								<div class="value-button" id="decrease" onclick="decreaseValue()" value="Decrease Value">-</div>
 								<input type="number" id="number" value=0 />
@@ -337,15 +337,15 @@
 							})
 
 							function increaseValue() {
-								var value = parseInt(document.getElementById('number').value, 10);
+								var value = parseInt(document.getElementById('number').value, 5);
 								value = isNaN(value) ? 0 : value;
 								value++;
-								value > 10 ? value = 10: '';
+								value > 5 ? value = 5: '';
 								document.getElementById('number').value = value;
 								}
 
 								function decreaseValue() {
-								var value = parseInt(document.getElementById('number').value, 10);
+								var value = parseInt(document.getElementById('number').value, 5);
 								value = isNaN(value) ? 0 : value;
 								value < 1 ? value = 1 : '';
 								value--;

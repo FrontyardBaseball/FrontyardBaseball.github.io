@@ -322,8 +322,7 @@
 
 							//function for overlay
 							$('#btn-mint').on('click', function () {
-							$('.center').show();
-							$(this).hide();
+							  getNetwork();
 							})
 
 							$('#close').on('click', function () {
@@ -396,6 +395,20 @@
 								// your code to run when "accountsChanged" happens
 
 							});
+							
+							async function getNetwork(){
+								const web3 = await Moralis.Web3.enable()
+								const network = web3.currentProvider.networkVersion;
+								console.log(web3.currentProvider.networkVersion);
+								if(network == "137"){
+									console.log(network);
+									$('.center').show();
+									$(this).hide();
+								}else {
+									window.alert("Please connect to the Polygon network in your wallet");
+								}
+							}
+
 
 							async function checkValid(amount){
 								// console.log(document.getElementById('number').value)

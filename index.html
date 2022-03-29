@@ -252,10 +252,10 @@
 								<p>How many Frontyard Baseball NFTs would you like to mint?</p>
 								<p>(up to 5 at a time)</p>
 
-								<div class="value-button" id="decrease" onclick="decreaseValue()" value="Decrease Value">-</div>
-								<input type="number" id="number" value=0 />
-								<div class="value-button" id="increase" onclick="increaseValue()" value="Increase Value">+</div> <br></br>
-
+								<!-- <div class="value-button" id="decrease" onclick="decreaseValue()" value="Decrease Value">-</div> -->
+								<input type="number" id="number" value="0" min="1" max="5" />
+								<!-- <div class="value-button" id="increase" onclick="increaseValue()" value="Increase Value">+</div> <br></br> -->
+								<br />
 								<div class="final-button" id="final-mint" onclick=" checkValid(document.getElementById('number').value) ">Mint your NFT(s)</div>
 							</form>
 					</div>
@@ -340,21 +340,21 @@
 							$('#btn-mint').show();
 							})
 
-							function increaseValue() {
-								var value = parseInt(document.getElementById('number').value, 5);
-								value = isNaN(value) ? 0 : value;
-								value++;
-								value > 5 ? value = 5: '';
-								document.getElementById('number').value = value;
-								}
+							// function increaseValue() {
+							// 	var value = parseInt(document.getElementById('number').value, 5);
+							// 	value = isNaN(value) ? 0 : value;
+							// 	value++;
+							// 	value > 5 ? value = 5: '';
+							// 	document.getElementById('number').value = value;
+							// 	}
 
-								function decreaseValue() {
-								var value = parseInt(document.getElementById('number').value, 5);
-								value = isNaN(value) ? 0 : value;
-								value < 1 ? value = 1 : '';
-								value--;
-								document.getElementById('number').value = value;
-							}
+							// 	function decreaseValue() {
+							// 	var value = parseInt(document.getElementById('number').value, 5);
+							// 	value = isNaN(value) ? 0 : value;
+							// 	value < 1 ? value = 1 : '';
+							// 	value--;
+							// 	document.getElementById('number').value = value;
+							// }
 
 							// connect to Moralis server
 							const serverUrl = "https://0hv78ffckgft.usemoralis.com:2053/server";
@@ -422,7 +422,7 @@
 									console.log("minting", amount)
 									// mintNFT(amount);
 								}else if (amount == 0){
-									alert("Please choose between 1-10 <---> you selected 0");
+									alert("Please choose between 1-5 <---> you selected 0");
 								}
 							}
 

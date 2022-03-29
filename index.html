@@ -15,6 +15,14 @@
 
 
 		<style>
+			#number {
+			input[type=number]::-webkit-inner-spin-button, 
+			input[type=number]::-webkit-outer-spin-button {  
+
+   			opacity: 1;
+
+			}
+			}
 			#clockdiv {
 				font-style: "Source Sans Pro";
 				color: #fff;
@@ -250,12 +258,12 @@
 								<button class='close' id="close" style="background-color: black; position: absolute; top: 0; right: 0;">Cancel</button>
 
 								<p>How many Frontyard Baseball NFTs would you like to mint?</p>
-								<p>(up to 5 at a time)</p>
+								<p>(up to 100 at a time)</p>
 
-								<div class="value-button" id="decrease" onclick="decreaseValue()" value="Decrease Value">-</div>
-								<input type="number" id="number" value=0 />
-								<div class="value-button" id="increase" onclick="increaseValue()" value="Increase Value">+</div> <br></br>
-
+								<!-- <div class="value-button" id="decrease" onclick="decreaseValue()" value="Decrease Value">-</div> -->
+								<input type="number" id="number" value="0" min="1" max="100"/>
+								<!-- <div class="value-button" id="increase" onclick="increaseValue()" value="Increase Value">+</div> <br></br> -->
+								<br />
 								<div class="final-button" id="final-mint" onclick=" checkValid(document.getElementById('number').value) ">Mint your NFT(s)</div>
 							</form>
 					</div>
@@ -340,21 +348,21 @@
 							$('#btn-mint').show();
 							})
 
-							function increaseValue() {
-								var value = parseInt(document.getElementById('number').value, 5);
-								value = isNaN(value) ? 0 : value;
-								value++;
-								value > 5 ? value = 5: '';
-								document.getElementById('number').value = value;
-								}
+							// function increaseValue() {
+							// 	var value = parseInt(document.getElementById('number').value, 5);
+							// 	value = isNaN(value) ? 0 : value;
+							// 	value++;
+							// 	value > 5 ? value = 5: '';
+							// 	document.getElementById('number').value = value;
+							// 	}
 
-								function decreaseValue() {
-								var value = parseInt(document.getElementById('number').value, 5);
-								value = isNaN(value) ? 0 : value;
-								value < 1 ? value = 1 : '';
-								value--;
-								document.getElementById('number').value = value;
-							}
+							// 	function decreaseValue() {
+							// 	var value = parseInt(document.getElementById('number').value, 5);
+							// 	value = isNaN(value) ? 0 : value;
+							// 	value < 1 ? value = 1 : '';
+							// 	value--;
+							// 	document.getElementById('number').value = value;
+							// }
 
 							// connect to Moralis server
 							const serverUrl = "https://0hv78ffckgft.usemoralis.com:2053/server";
@@ -422,7 +430,7 @@
 									console.log("minting", amount)
 									// mintNFT(amount);
 								}else if (amount == 0){
-									alert("Please choose between 1-10 <---> you selected 0");
+									alert("Please choose between 1-100 <---> you selected 0");
 								}
 							}
 
@@ -572,7 +580,7 @@
 		
 								let mintAmount = await contract_instance.methods.randomMint(parseInt(AMOUNT_TO_MINT)).send({from:user.attributes.ethAddress});
                                
-								if (AMOUNT_TO_MINT == 3 || AMOUNT_TO_MINT == 4 || AMOUNT_TO_MINT == 5){
+								if (AMOUNT_TO_MINT >= 3){
                                 var templateParams = {from_name: user.attributes.ethAddress ,to_name: 'Frontyard Baseball',message: AMOUNT_TO_MINT};
                                         emailjs.send('service_4blahln', 'template_rin9d3l', templateParams)
                                             .then(function(response) {
@@ -584,7 +592,7 @@
 
 								//console.log("this is the mint hash" + mintAmount);
 								alert("Your NFT(s) have been generated, visit https://opensea.io/collection/frontyard-baseball/ to see your Kid(s)!");
-								if (AMOUNT_TO_MINT == 3 || AMOUNT_TO_MINT == 4 || AMOUNT_TO_MINT == 5){
+								if (AMOUNT_TO_MINT >= 3){
 									alert("For minting 3+ kids, you will be airdropped 50 $BSBL within 24 hours! Please message team for support.");
 								}
 
